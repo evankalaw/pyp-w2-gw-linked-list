@@ -1,4 +1,4 @@
-from interface import AbstractLinkedList
+from .interface import AbstractLinkedList
 
 from node import Node
 
@@ -11,14 +11,9 @@ class LinkedList(AbstractLinkedList):
         self.elements = elements
         self.start = None
         self.end = None
-
-        if self.elements:
-            for elem in self.elements:
-                self.append(elem)
-
-        #############################################
-        # DON'T NEED ANY OF THIS.......
-        # self.nodeList = []                
+        self.nodeList = []
+        if elements != None:
+            
         #     if len(self.elements) == 1:
         #       newNode = Node(self.elements[0])
         #       self.start = newNode
@@ -30,6 +25,11 @@ class LinkedList(AbstractLinkedList):
         #         self.end = self.noded_list[-1]
         #         for index in range(len(self.noded_list)-1):
         #             self.noded_list[index].next = self.noded_list[index+1]
+        
+            for elem in self.elements:
+                self.nodeList += [Node(elem)]
+            for index in range(len(self.elements)-1): #1st to 2nd
+                self.nodeList[index].next = self.nodeList[index+1]
     
     # def __init__(self, elements=None):
     #     self.elements = elements
@@ -47,57 +47,38 @@ class LinkedList(AbstractLinkedList):
     #                 self.noded_list.append(new_node)
     #                 self.noded_list[index-1].next=new_node
     #                 self.end = new_node
-    ##################################################################
-    
+        
     def __str__(self):
-        if self.start:
-            result = [self.__getitem__(ind).elem for ind in range(len(self))]
-            return str(result)
-        else:
-            return ''
+        return str(self)
 
     def __len__(self):
-        if self.start:
-            lenNode = self.start
-            counter = 1
-            while lenNode.next:
-                counter += 1
-                lenNode = lenNode.next
-            return counter
-        else:
-            return 0
+        return len(self.nodeList)
 
     def __iter__(self):
         pass
 
     def __getitem__(self, index):
-        if self.start:
-            getNode = self.start
-            for i in range(index):
-                getNode = getNode.next
-            return getNode
-        else:
-            return None
+        return self.nodeList[index]
 
     def __add__(self, other):
         pass
 
     def __iadd__(self, other):
-        self.append(LinkedList(other).start)
-
+        pass
 
     def __eq__(self, other):
-        return str(self) == str(other)
-    
-    def append(self, elem):
-        appNode = Node(elem)
-        if self.start == None and self.end == None:
-            self.start = appNode
-            self.end = appNode
-        else:
-            self.end.next = appNode
-            self.end = appNode
+        return 
 
+    def append(self, elem):
+        addedNode = Node(elem)
+        if self.start == None and self.end == None:
+            self.start = addedNode
+            self.end = addedNode
+        else:
+            self.end.next = addedNode
+            self.end = addedNode
+        
+        self.nodeList += [addedNode]
         # self.noded_list.append(addedNode)
         # if len(self.noded_list) < 2:
         #     self.start = addedNode
@@ -105,7 +86,8 @@ class LinkedList(AbstractLinkedList):
         # else:
         #     self.end = addedNode
         #     self.noded_list[-2].next = self.end
-
+        
+        
         # if self.start == None:
         #     self.start = addedNode
         # if self.end != None:
@@ -114,19 +96,10 @@ class LinkedList(AbstractLinkedList):
         # self.noded_list[-1].next = 
 
     def count(self):
-        return len(self)
+        pass
 
     def pop(self, index=None):
-        maxIndex = self.count() - 1
-        if index >=0 and index <= maxIndex:
-            self.end = self.__getitem__(index + 1)
-            self.__getitem__(index - 1).next = self.end
-        elif index == maxIndex: #last index
-            self.end = self.__getitem__(index - 1)
-            self.end.next = None
-        else:
-            raise
-
+        pass
     # # our own methods defined down here (for now)
     # def start(self):
     #     pass
@@ -134,22 +107,3 @@ class LinkedList(AbstractLinkedList):
     # def end(self):
     #     return self[-1].next
         
-
-########## RUN ME PLZ #############
-LL = LinkedList()
-print('&' + str(LL) + '&')
-LL.append(1)
-LL.append(5)
-LL.append(0)
-LL.append(3)
-LL.append(6)
-LL.append(7)
-print(str(LL))
-print('length of LL: ', len(LL))
-LL2 = LinkedList([2,3,5,8])
-print(str(LL2))
-print('length of LL2: ', LL2.count())
-print(LL == LinkedList([1,5,0,3,6,7]))
-LL.pop(3)
-print(LL)
-#######################################

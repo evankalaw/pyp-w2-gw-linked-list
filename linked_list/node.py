@@ -3,7 +3,7 @@ class Node(object):
     Node class representing each of the linked nodes in the list.
     """
 
-    def __init__(self, elem, next=None):
+    def __init__(self, elem=None, next=None):
         self.elem = elem
         self.next = next
 
@@ -12,7 +12,7 @@ class Node(object):
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return self.__dict__ == other.__dict__
+            return self.elem == other.elem
         else:
             return False
 
