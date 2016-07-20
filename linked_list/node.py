@@ -4,13 +4,20 @@ class Node(object):
     """
 
     def __init__(self, elem, next=None):
-        pass
+        self.elem = elem
+        self.next = next
 
     def __str__(self):
-        pass
+        return str(self.elem)
 
     def __eq__(self, other):
-        pass
+        if isinstance(other, self.__class__):
+            return self.__dict__ == other.__dict__
+        else:
+            return False
 
     def __repr__(self):
-        pass
+        return str(self)
+        
+
+    
